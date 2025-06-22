@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formula 1 Grand Prix</title>
+    <title>F1 GP Ticket Tracker</title> <!-- Renamed title -->
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -12,6 +12,12 @@
             font-family: 'Inter', sans-serif;
             background-color: #0a0f2c; /* Dark blue background */
             color: #e0e0e0;
+        }
+        /* Stylish header background */
+        header {
+            background: linear-gradient(to right, #0d0d0d, #2a0a0a); /* Dark to red gradient */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+            padding: 1rem 0; /* More padding */
         }
         .hero-section {
             background-image: url('images/tracks/f1.png'); /* Updated: Your f1.png image */
@@ -48,9 +54,8 @@
             background-color: #1a1a1a;
             border-radius: 1.5rem;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            /* Flex properties removed from here, now in HTML as Tailwind classes */
+            align-items: center; /* Still needed here for race cards themselves */
             justify-content: space-between;
             padding-bottom: 1.5rem;
             border: 4px solid transparent; /* Default transparent border */
@@ -126,13 +131,10 @@
             background-color: #1a1a1a;
             border-radius: 1.5rem;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center; /* Center content vertically and horizontally */
+            /* Flex properties now directly in HTML using Tailwind classes */
             padding: 2rem;
             height: 200px; /* Fixed height for consistent cards */
-            text-align: center;
+            text-align: center; /* Ensures text inside is centered */
             text-decoration: none; /* Remove underline from link */
             color: inherit; /* Inherit text color */
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -151,6 +153,7 @@
             font-size: 1.75rem; /* Team name font size */
             font-weight: 700;
             color: #e0e0e0;
+            text-align: center; /* Explicitly center text within the name */
         }
 
         /* Styles for the staggered team grid layout */
@@ -183,7 +186,8 @@
         /* Styles for the race-card-image-container */
         .race-card-image-container { /* New class for the image container */
             width: 100%;
-            height: 200px; /* Fixed height for consistency */
+            height: 200px;
+            object-fit: cover;
             border-top-left-radius: 1.5rem;
             border-top-right-radius: 1.5rem;
             background-size: cover; /* Flag image will cover the container */
@@ -198,20 +202,86 @@
             max-height: 90%;
             object-fit: contain; /* Keep aspect ratio and fit within bounds */
         }
+
+        /* Track Detail Section Styles */
+        #track-detail-section {
+            background-color: #1a1a1a;
+            padding: 4rem 1rem;
+            text-align: center;
+            display: none; /* Explicitly set to none by default */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px); /* Adjust based on header height */
+        }
+        #track-detail-section img {
+            max-width: 95%;
+            max-height: 70vh; /* Make image large but fit within viewport */
+            object-fit: contain;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.4); /* Red glow for focus */
+            margin-bottom: 2rem;
+        }
+        #track-detail-section .button-group {
+            display: flex;
+            gap: 1rem; /* Space between buttons */
+            margin-top: 1rem; /* Space below the image */
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            justify-content: center; /* Center buttons horizontally */
+        }
+        #track-detail-section .action-button {
+            background-color: #e50914;
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            transition: background-color 0.3s ease-in-out;
+            text-decoration: none; /* Remove underline from links */
+            display: inline-block; /* Ensure padding and sizing work */
+        }
+        #track-detail-section .action-button:hover {
+            background-color: #c00812;
+        }
+
+        /* Responsive styling for nav links */
+        .nav-link {
+            position: relative;
+            padding-bottom: 4px; /* Space for the underline */
+            overflow: hidden; /* Hide overflow for animation */
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px; /* Underline thickness */
+            background-color: #e50914; /* F1 Red */
+            transition: width 0.3s ease-out;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active::after {
+            width: 100%; /* Always show underline for active link if needed */
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- Header/Navbar -->
-    <header class="bg-gray-900 bg-opacity-80 p-4 shadow-lg sticky top-0 z-50">
+    <header class="bg-gradient-to-r from-gray-900 to-red-900 p-4 shadow-lg sticky top-0 z-50">
         <nav class="container mx-auto flex justify-between items-center px-4">
-            <div class="text-2xl font-bold text-red-600">F1 GRAND PRIX</div>
+            <div class="text-2xl font-bold text-red-500">F1 GP Ticket Tracker</div> <!-- Renamed and styled -->
             <ul class="hidden md:flex space-x-6">
-                <li><a href="#" class="hover:text-red-600 transition duration-300">Home</a></li>
-                <li><a href="#schedule-section" class="hover:text-red-600 transition duration-300">Schedule</a></li>
-                <li><a href="#teams-section" class="hover:text-red-600 transition duration-300">Teams</a></li>
-                <li><a href="#drivers-section" class="hover:text-red-600 transition duration-300">Drivers</a></li>
-                <li><a href="#" class="hover:text-red-600 transition duration-300">Tickets</a></li>
+                <li><a href="#" class="nav-link text-white hover:text-red-300 transition duration-300">Home</a></li>
+                <li><a href="#schedule-section" class="nav-link text-white hover:text-red-300 transition duration-300">Schedule</a></li>
+                <li><a href="#teams-section" class="nav-link text-white hover:text-red-300 transition duration-300">Teams</a></li>
+                <li><a href="#drivers-section" class="nav-link text-white hover:text-red-300 transition duration-300">Drivers</a></li>
+                <li><a href="#" class="nav-link text-white hover:text-red-300 transition duration-300">Tickets</a></li>
             </ul>
             <button class="md:hidden text-white focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -337,7 +407,7 @@
 
                 <div class="race-card w-full max-w-sm shadow-lg" data-race-date="2025-07-06">
                     <div class="race-card-image-container" style="background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('images/flags/Britain_flag.png');">
-                        <img src="images/tracks/britain.png" alt="British GP Track" class="">
+                        <img src="images/tracks/british.png" alt="British GP Track" class="">
                     </div>
                     <h3 class="race-card-title">British GP</h3>
                     <button class="race-card-button">View</button>
@@ -400,7 +470,7 @@
                 </div>
 
                 <div class="race-card w-full max-w-sm shadow-lg" data-race-date="2025-10-26">
-                    <div class="race-card-image-container" style="background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('images/flags/Mexico_flag.png');">
+                    <div class="race-card-image-container" style="background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('images/flags/Mexico_flag');">
                         <img src="images/tracks/mexico.png" alt="Mexico GP Track" class="">
                     </div>
                     <h3 class="race-card-title">Mexico GP</h3>
@@ -442,6 +512,18 @@
         </div>
     </section>
 
+    <!-- Track Detail Section -->
+    <section id="track-detail-section" class="py-16 bg-gray-900 px-4">
+        <div class="container mx-auto flex flex-col items-center">
+            <img id="detail-track-image" src="" alt="Full screen track image" class="mb-8">
+            <div class="button-group">
+                <a id="buy-tickets-button" href="#" target="_blank" class="action-button">Buy Tickets</a>
+                <a id="search-tickets-button" href="#" target="_blank" class="action-button">Search for Tickets</a>
+                <button id="back-to-schedule-button" class="action-button">Back to Schedule</button>
+            </div>
+        </div>
+    </section>
+
     <!-- Teams Section -->
     <section id="teams-section" class="py-16 bg-gray-900 px-4">
         <div class="container mx-auto">
@@ -450,61 +532,61 @@
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center teams-grid-staggered">
                 <!-- Team Card: Ferrari -->
-                <a href="#ferrari-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 4px solid #d40000;">
+                <a href="#ferrari-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #d40000;">
                     <img src="https://placehold.co/100x100/d40000/ffffff?text=FER" alt="Ferrari Team" class="team-card-image">
                     <h3 class="team-card-name">Ferrari</h3>
                 </a>
 
                 <!-- Team Card: McLaren -->
-                <a href="#mclaren-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 4px solid #ff8000;">
+                <a href="#mclaren-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #ff8000;">
                     <img src="https://placehold.co/100x100/ff8000/ffffff?text=MCL" alt="McLaren Team" class="team-card-image">
                     <h3 class="team-card-name">McLaren</h3>
                 </a>
 
-                <!-- Team Card: Red Bull Racing -->
-                <a href="#red-bull-racing-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 44px solid #00008b;">
+                <!-- Team Card: Red Bull -->
+                <a href="#red-bull-racing-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #00008b;"> <!-- Corrected border-top -->
                     <img src="https://placehold.co/100x100/00008b/ffffff?text=RBR" alt="Red Bull Racing Team" class="team-card-image">
-                    <h3 class="team-card-name">Red Bull Racing</h3>
+                    <h3 class="team-card-name">Red Bull</h3> <!-- Changed name -->
                 </a>
 
                 <!-- Team Card: Mercedes -->
-                <a href="#mercedes-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 4px solid #00a896;">
+                <a href="#mercedes-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #00a896;">
                     <img src="https://placehold.co/100x100/00a896/ffffff?text=MER" alt="Mercedes Team" class="team-card-image">
                     <h3 class="team-card-name">Mercedes</h3>
                 </a>
 
                 <!-- Team Card: Aston Martin -->
-                <a href="#aston-martin-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 4px solid #006f62;">
+                <a href="#aston-martin-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #006f62;">
                     <img src="https://placehold.co/100x100/006f62/ffffff?text=AST" alt="Aston Martin Team" class="team-card-image">
                     <h3 class="team-card-name">Aston Martin</h3>
                 </a>
 
                 <!-- Team Card: Alpine -->
-                <a href="#alpine-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 4px solid #00bfff;">
+                <a href="#alpine-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #00bfff;">
                     <img src="https://placehold.co/100x100/00bfff/ffffff?text=ALP" alt="Alpine Team" class="team-card-image">
                     <h3 class="team-card-name">Alpine</h3>
                 </a>
 
                 <!-- Team Card: Haas -->
-                <a href="#haas-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 4px solid #ffffff;">
+                <a href="#haas-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #ffffff;">
                     <img src="https://placehold.co/100x100/ffffff/000000?text=HAA" alt="Haas Team" class="team-card-image">
                     <h3 class="team-card-name">Haas</h3>
                 </a>
 
                 <!-- Team Card: Racing Bulls -->
-                <a href="#racing-bulls-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 4px solid #6699ff;">
+                <a href="#racing-bulls-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #6699ff;">
                     <img src="https://placehold.co/100x100/6699ff/ffffff?text=RCB" alt="Racing Bulls Team" class="team-card-image">
                     <h3 class="team-card-name">Racing Bulls</h3>
                 </a>
 
                 <!-- Team Card: Sauber -->
-                <a href="#sauber-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 4px solid #008000;">
+                <a href="#sauber-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #008000;">
                     <img src="https://placehold.co/100x100/008000/ffffff?text=SAU" alt="Sauber Team" class="team-card-image">
                     <h3 class="team-card-name">Sauber</h3>
                 </a>
 
                 <!-- Team Card: Williams -->
-                <a href="#williams-drivers" class="team-card w-full max-w-xs shadow-lg block" style="border-top: 4px solid #00ffff;">
+                <a href="#williams-drivers" class="team-card w-full max-w-xs shadow-lg block flex flex-col items-center justify-center" style="border-top: 4px solid #00ffff;">
                     <img src="https://placehold.co/100x100/00ffff/000000?text=WIL" alt="Williams Team" class="team-card-image">
                     <h3 class="team-card-name">Williams</h3>
                 </a>
@@ -546,7 +628,7 @@
             </div>
 
             <!-- Red Bull Racing Team -->
-            <h3 id="red-bull-racing-drivers" class="driver-team-title">Red Bull Racing</h3>
+            <h3 id="red-bull-racing-drivers" class="driver-team-title">Red Bull</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 justify-items-center mb-12">
                 <div class="driver-card w-full max-w-xs shadow-lg">
                     <img src="https://placehold.co/150x150/00008b/ffffff?text=MV" alt="Max Verstappen" class="driver-card-image">
@@ -668,7 +750,7 @@
     <!-- Footer -->
     <footer class="bg-gray-950 py-10 px-4 text-center text-gray-400">
         <div class="container mx-auto">
-            <p>&copy; 2025 F1 Grand Prix Fan Page. All rights reserved.</p>
+            <p>&copy; 2025 F1 GP Ticket Tracker. All rights reserved.</p>
             <div class="mt-4 flex justify-center space-x-6">
                 <a href="#" class="hover:text-red-600 transition duration-300">Privacy Policy</a>
                 <a href="#" class="hover:text-red-600 transition duration-300">Terms of Service</a>
@@ -698,6 +780,71 @@
                     } else {
                         card.classList.remove('next-race-highlight'); // Remove highlight if it's in the past or not the next one
                     }
+                }
+            });
+
+            // JavaScript for the full-screen track detail section
+            const viewButtons = document.querySelectorAll('.race-card-button');
+            const trackDetailSection = document.getElementById('track-detail-section');
+            const detailTrackImage = document.getElementById('detail-track-image');
+            const buyTicketsButton = document.getElementById('buy-tickets-button');
+            const searchTicketsButton = document.getElementById('search-tickets-button');
+            const backToScheduleButton = document.getElementById('back-to-schedule-button'); // Reinstated
+            const scheduleSection = document.getElementById('schedule-section');
+
+            // Helper function to slugify text for URLs
+            function slugify(text) {
+                return text.toString().toLowerCase()
+                    .replace(/\s+/g, '-')           // Replace spaces with -
+                    .replace(/[^\w-]+/g, '')       // Remove all non-word chars
+                    .replace(/--+/g, '-')          // Replace multiple - with single -
+                    .replace(/^-+/, '')            // Trim - from start of text
+                    .replace(/-+$/, '');           // Trim - from end of text
+            }
+
+            // Function to show the track detail section
+            function showTrackDetail(imageSrc, gpTitle) {
+                detailTrackImage.src = imageSrc;
+                trackDetailSection.style.display = 'flex'; // Make visible
+
+                // Dynamically set button links
+                const gpSlug = slugify(gpTitle.replace('(USA)', '').replace('(Monza)', '').replace('(Italy)', '').replace('(UAE)', '').trim());
+                buyTicketsButton.href = `https://tickets.formula1.com/en/f1-${gpSlug}-tickets`;
+                searchTicketsButton.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(gpTitle)}%20GP%20Seats%20View`;
+
+
+                // Scroll smoothly to the track detail section
+                trackDetailSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Function to hide the track detail section and scroll back to schedule
+            function hideTrackDetail() {
+                trackDetailSection.style.display = 'none'; // Hide
+                detailTrackImage.src = ''; // Clear the image source
+                buyTicketsButton.href = '#'; // Reset href
+                searchTicketsButton.href = '#'; // Reset href
+                scheduleSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            // Event listeners for opening track detail view
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const raceCard = this.closest('.race-card');
+                    const trackImage = raceCard.querySelector('.race-card-image-container img');
+                    const gpTitle = raceCard.querySelector('.race-card-title').textContent; // Get the GP title
+                    if (trackImage && gpTitle) {
+                        showTrackDetail(trackImage.src, gpTitle);
+                    }
+                });
+            });
+
+            // Event listener for the new Back to Schedule button
+            backToScheduleButton.addEventListener('click', hideTrackDetail);
+
+            // Optional: Close track detail section on Escape key (still useful!)
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && trackDetailSection.style.display !== 'none') {
+                    hideTrackDetail();
                 }
             });
         });
