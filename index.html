@@ -302,9 +302,10 @@
                 <a href="#schedule-section" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                     View Schedule
                 </a>
-                <button class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                <!-- Updated: Main "Buy Tickets" button link -->
+                <a href="https://tickets.formula1.com/" target="_blank" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
                     Buy Tickets
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -470,7 +471,7 @@
                 </div>
 
                 <div class="race-card w-full max-w-sm shadow-lg" data-race-date="2025-10-26">
-                    <div class="race-card-image-container" style="background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('images/flags/Mexico_flag');">
+                    <div class="race-card-image-container" style="background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url('images/flags/Mexico_flag.png');">
                         <img src="images/tracks/mexico.png" alt="Mexico GP Track" class="">
                     </div>
                     <h3 class="race-card-title">Mexico GP</h3>
@@ -741,21 +742,18 @@
             <p class="text-lg md:text-xl mb-10 max-w-2xl mx-auto opacity-90">
                 Join millions of fans worldwide and witness the thrill of Formula 1 live. Secure your spot now!
             </p>
-            <button class="bg-white text-red-700 font-bold py-4 px-10 rounded-full shadow-xl text-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-200">
-                Get Your Tickets Today!
-            </button>
+            <!-- Updated button text and added ID for dynamic linking -->
+            <a id="get-next-race-tickets-button" href="#" class="bg-white text-red-700 font-bold py-4 px-10 rounded-full shadow-xl text-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gray-200">
+                Get tickets to the next Race
+            </a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-gray-950 py-10 px-4 text-center text-gray-400">
         <div class="container mx-auto">
+            <!-- Removed existing footer content -->
             <p>&copy; 2025 F1 GP Ticket Tracker. All rights reserved.</p>
-            <div class="mt-4 flex justify-center space-x-6">
-                <a href="#" class="hover:text-red-600 transition duration-300">Privacy Policy</a>
-                <a href="#" class="hover:text-red-600 transition duration-300">Terms of Service</a>
-                <a href="#" class="hover:text-red-600 transition duration-300">Contact Us</a>
-            </div>
         </div>
     </footer>
 
@@ -766,6 +764,7 @@
             today.setHours(0, 0, 0, 0); // Set time to 00:00:00 for accurate day comparison
 
             let nextRaceFound = false;
+            let nextRaceGpTitle = ''; // Variable to store the title of the next race
 
             raceCards.forEach(card => {
                 const raceDateStr = card.getAttribute('data-race-date');
@@ -777,6 +776,7 @@
                     if (raceDate >= today && !nextRaceFound) {
                         card.classList.add('next-race-highlight');
                         nextRaceFound = true; // Mark that we found the first upcoming race
+                        nextRaceGpTitle = card.querySelector('.race-card-title').textContent; // Store the title
                     } else {
                         card.classList.remove('next-race-highlight'); // Remove highlight if it's in the past or not the next one
                     }
@@ -789,17 +789,42 @@
             const detailTrackImage = document.getElementById('detail-track-image');
             const buyTicketsButton = document.getElementById('buy-tickets-button');
             const searchTicketsButton = document.getElementById('search-tickets-button');
-            const backToScheduleButton = document.getElementById('back-to-schedule-button'); // Reinstated
+            const backToScheduleButton = document.getElementById('back-to-schedule-button');
             const scheduleSection = document.getElementById('schedule-section');
+            const getNextRaceTicketsButton = document.getElementById('get-next-race-tickets-button');
 
-            // Helper function to slugify text for URLs
-            function slugify(text) {
-                return text.toString().toLowerCase()
-                    .replace(/\s+/g, '-')           // Replace spaces with -
-                    .replace(/[^\w-]+/g, '')       // Remove all non-word chars
-                    .replace(/--+/g, '-')          // Replace multiple - with single -
-                    .replace(/^-+/, '')            // Trim - from start of text
-                    .replace(/-+$/, '');           // Trim - from end of text
+
+            // Map of GP titles to their specific ticket URLs
+            const gpTicketLinks = {
+                "Australian GP": "https://tickets.formula1.com/en/f1-3159-australia",
+                "Chinese GP": "https://tickets.formula1.com/en/f1-3182-china",
+                "Japanese GP": "https://tickets.formula1.com/en/f1-3309-japan",
+                "Bahrain GP": "https://tickets.formula1.com/en/f1-3215-bahrain",
+                "Saudi Arabian GP": "https://tickets.formula1.com/en/f1-3216-saudi-arabia",
+                "Miami (USA) GP": "https://tickets.formula1.com/en/f1-3270-miami",
+                "Emilia Romagna (Italy) GP": "https://tickets.formula1.com/en/f1-3271-emilia-romagna",
+                "Monaco GP": "https://tickets.formula1.com/en/f1-3272-monaco",
+                "Spanish GP": "https://tickets.formula1.com/en/f1-3273-spain",
+                "Canadian GP": "https://tickets.formula1.com/en/f1-3274-canada",
+                "Austrian GP": "https://tickets.formula1.com/en/f1-3222-austria",
+                "British GP": "https://tickets.formula1.com/en/f1-3275-great-britain",
+                "Belgian GP": "https://tickets.formula1.com/en/f1-3286-belgium",
+                "Hungarian GP": "https://tickets.formula1.com/en/f1-3276-hungary",
+                "Dutch GP": "https://tickets.formula1.com/en/f1-42837-netherlands",
+                "Italian (Monza) GP": "https://tickets.formula1.com/en/f1-3293-italy",
+                "Azerbaijan GP": "https://tickets.formula1.com/en/f1-3277-azerbaijan",
+                "Singapore GP": "https://tickets.formula1.com/en/f1-3301-singapore",
+                "United States (Austin) GP": "https://tickets.formula1.com/en/f1-3320-united-states",
+                "Mexico GP": "https://tickets.formula1.com/en/f1-3278-mexico",
+                "Brazilian GP": "https://tickets.formula1.com/en/f1-3325-brazil",
+                "Las Vegas (USA) GP": "https://tickets.formula1.com/en/f1-3279-las-vegas",
+                "Qatar GP": "https://tickets.formula1.com/en/f1-56257-qatar",
+                "Abu Dhabi (UAE) GP": "https://tickets.formula1.com/en/f1-3287-abu-dhabi"
+            };
+
+            // Helper function to encode text for URL parameters
+            function encodeForUrl(text) {
+                return encodeURIComponent(text.trim());
             }
 
             // Function to show the track detail section
@@ -808,9 +833,9 @@
                 trackDetailSection.style.display = 'flex'; // Make visible
 
                 // Dynamically set button links
-                const gpSlug = slugify(gpTitle.replace('(USA)', '').replace('(Monza)', '').replace('(Italy)', '').replace('(UAE)', '').trim());
-                buyTicketsButton.href = `https://tickets.formula1.com/en/f1-${gpSlug}-tickets`;
-                searchTicketsButton.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(gpTitle)}%20GP%20Seats%20View`;
+                const ticketLink = gpTicketLinks[gpTitle] || "https://tickets.formula1.com/"; // Fallback to general store
+                buyTicketsButton.href = ticketLink;
+                searchTicketsButton.href = `https://www.youtube.com/results?search_query=${encodeForUrl(gpTitle)}%20Seats%20View`;
 
 
                 // Scroll smoothly to the track detail section
@@ -838,10 +863,20 @@
                 });
             });
 
-            // Event listener for the new Back to Schedule button
+            // Event listener for the Back to Schedule button
             backToScheduleButton.addEventListener('click', hideTrackDetail);
 
-            // Optional: Close track detail section on Escape key (still useful!)
+            // Set the href for the "Get tickets to the next Race" button on the main page
+            if (getNextRaceTicketsButton && nextRaceGpTitle) {
+                const nextRaceTicketLink = gpTicketLinks[nextRaceGpTitle] || "https://tickets.formula1.com/";
+                getNextRaceTicketsButton.href = nextRaceTicketLink;
+            } else if (getNextRaceTicketsButton) {
+                // If no upcoming race is found, link to the general F1 ticket store
+                getNextRaceTicketsButton.href = "https://tickets.formula1.com/";
+            }
+
+
+            // Optional: Close track detail section on Escape key
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape' && trackDetailSection.style.display !== 'none') {
                     hideTrackDetail();
