@@ -1,4 +1,4 @@
-#F1-Ticket-Tracker-Website
+# F1-Ticket-Tracker-Website
 
 About this project: 
 This is a responsive landing page for Formula 1 fans who want to easily check race dates, see teams and drivers, and find tickets in one place. I built everything from scratch, using HTML, Tailwind CSS, and plain JavaScript for all the layout, design, and dynamic parts. What makes this version different is that I built it using Google Gemini Canvas to demonstrate how powerful AI can be when combined with my ideas.
